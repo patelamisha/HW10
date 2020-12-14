@@ -163,10 +163,7 @@ class Repository:
         """ This function defines the data from the database """
         rows: List[Tuple] = list()
         db: sqlite3.Connection = sqlite3.connect(db_path)
-        query: str = """ select Name, CWID, Course, Grade, Name
-                        from students , grades, instructors 
-                        where CWID = StudentCWID and InstructorCWID = CWID
-                        order by Name; """
+        query: str =  'select students.Name,students.CWID,"Course	",Grade,instructors.Name from students,grades,instructors where students.CWID= StudentCWID and instructors.CWID=InstructorCWID order by students.Name;'
         pt: PrettyTable = PrettyTable(field_names=["Name","CWID","Course","Grade","Instructor"])
         for row in db.execute(query):
             pt.add_row(row)
@@ -198,7 +195,7 @@ class Repository:
 
 def main():
     try:
-        HW11: Repository = Repository('R:/Steven Institute/SSW-810-B/HW11') 
+        HW11: Repository = Repository('R:/Steven Institute/SSW-810-B/HW11/810_startup.db') 
     except Exception as e:
         print(e)
 
